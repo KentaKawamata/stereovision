@@ -1,8 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import cv2
-import sys, os, time
-import codecs, json
+import sys
+import os
+import time
+import codecs
+import json
 import numpy as np
 np.set_printoptions(threshold=np.inf)
 
@@ -129,7 +132,7 @@ class TemplateMatching():
         print("------- save array to json -------")
 
 def read():
-    im_path = "./0725/"
+    im_path = "./images/"
     left_im = "img814_left.jpg"
     right_im = "img814_right.jpg"
     file_left = os.path.join(im_path, left_im)
@@ -160,10 +163,9 @@ def read():
     return left, right
 
 def main():
-
     left, right = read()
-    TemplateMatching(left, right)
-    TemplateMatching.matching()
+    match = TemplateMatching(left, right)
+    match.matching()
 
 if __name__ == "__main__":
 

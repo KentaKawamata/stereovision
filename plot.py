@@ -2,29 +2,28 @@
 # -*- coding: utf-8 -*-
 import cv2
 from scipy.stats import norm
-import sys, os
-import codecs, json
+import sys
+import os
+import codecs
+import json
 import numpy as np
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 np.set_printoptions(threshold=np.inf)
 
 class Plot3D():
     def __init__(self):
-        self.json_path = "./parallax/"
+        self.json_path = "./output/"
         self.json_name = "diff_map.json"
-        self.file = str(self.json_path) + str(self.json_name)
+        self.string = "plot"
+        self.file = os.path.join(self.json_path, self.json_name)
         self.data = self.read_json()
         self.h = self.data.shape[0]
         self.w = self.data.shape[1]
-        self.string = "plot"
 
     def read_json(self):
- 
         obj = codecs.open(self.file, 'r', encoding='utf-8').read()
         li = json.loads(obj)
         data = np.array(li)
-
         return data
 
     def draw(self):
@@ -36,8 +35,8 @@ class Plot3D():
         plt.gray()
         plt.show()
 
-        file_name ="map_" + str(iself.string) + ".png"
-        cv2.imwrite(file_name, diff)
+        file_name ="map_" + str(self.string) + ".png"
+        cv2.imwrite(os.path.join(self.json_path, file_name), diff)
 
     def measure(self, glass_point):
   
@@ -45,8 +44,6 @@ class Plot3D():
 
         num = glass_point.size
         ave = np.mean(glass_point)
-        median = np.median(glass_point)
-        dispersion = np.var(glass_point)
         standard = np.std(glass_point)
 
         X = np.arange(-250,750,0.1)
@@ -54,8 +51,6 @@ class Plot3D():
 
         print("num = ", num)
         print("average = ", ave)
-        print("median = ", median)
-        print("disperson = ", dispersion)
         print("standard = ", standard)
 
         fig = plt.figure()
@@ -68,13 +63,13 @@ class Plot3D():
         point = []
         x_cood, y_cood, z_cood = 0, 0, 0
         b=70
-        mask = cv2.imread("mask814.png", 0)
-        image = cv2.imread("./0725/img814_left.jpg", 1)
+        mask = cv2.imread("./images/mask814.png", 0)
+        image = cv2.imread("./images/img814_left.jpg", 1)
         if mask is None or image is None:
             print("----- No mask image or template image in calc -----")
             sys.exit()
 
-        with open("compare.pts", "w") as fp:
+        with open("./output/compare.pts", "w") as fp:
 
             for j in range(0, self.h, 1):
                 for i in range(0, self.w, 3):
@@ -100,33 +95,11 @@ class Plot3D():
 
             self.measure(point)
 
-        return x, y, z
-
-    def plot_graph(self):
-  
-    
-        h, w = self.data.shape
-
-    
-        #fig = plt.figure()
-        #ax = Axes3D(fig)
-
-        x, y, z = self.calc(h, w)
-        '''
-        ax.set_xlabel("x-axis")
-        ax.set_ylabel("y-axis")
-        ax.set_zlabel("z-axis")
-
-        #座標点を描画
-        ax.plot(x, y, z, "o", color="red", ms=0.5, mew=0.4)
-
-        plt.show()
-        '''
-
 def main():
 
-    draw()
-    plot_graph()
+    plot = Plot3D()
+    plot.draw()
+    plot.calc()
 
 if __name__ == "__main__":
 
