@@ -13,7 +13,7 @@ class TemplateMatching():
     def __init__(self, left_img, right_img):
         self.left = left_img
         self.right = right_img
-        self.block = 16
+        self.block = 16 
         self.step = 2
         self.json_path = "./output/"
         self.json_name = "diff_map.json"
@@ -124,7 +124,7 @@ class TemplateMatching():
     def ex_json(self, data):
 
         exp = data.tolist()
-        file_path = str(json_path) + str(self.json_name)
+        file_path = str(self.json_path) + str(self.json_name)
 
         json.dump(exp, codecs.open(file_path, 'w', encoding='utf-8'), \
                   separators=(',', ':'), sort_keys=True, indent=4)
