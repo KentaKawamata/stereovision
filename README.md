@@ -14,8 +14,8 @@ RANSACアルゴリズムにてノイズ除去を行う．
 三次元座標を算出し，CloudCompareにて三次元復元を行うためのptsファイルを生成する．
 
 ## gitのリンク
-[](https://github.com/KentaKawamata/stereovision.git)
+[url](https://github.com/KentaKawamata/stereovision)
   
 ## これまでに使用してきたコード郡
-[DynamicCode](https://github.com/KentaKawamata/Lab/tree/master/5semester/stereovision.git)
+[DynamicCode](https://github.com/KentaKawamata/Lab/tree/master/5semester/stereovision)
 
